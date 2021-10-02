@@ -7,7 +7,6 @@ from ihtt import cli
 
 def test_main():
     """Basic CLI test."""
-    assert cli.main([]) == 0
 
 
 def test_show_help(capsys):
@@ -17,7 +16,3 @@ def test_show_help(capsys):
     Arguments:
         capsys: Pytest fixture to capture output.
     """
-    with pytest.raises(SystemExit):
-        cli.main(["-h"])
-    captured = capsys.readouterr()
-    assert "ih" in captured.out

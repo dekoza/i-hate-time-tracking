@@ -8,7 +8,11 @@ import httpx
 import toml
 from jinja2 import StrictUndefined
 from jinja2.sandbox import SandboxedEnvironment
-from pip._internal.commands.show import search_packages_info  # noqa: WPS436 (no other way?)
+from pip._internal.commands.show import (
+    search_packages_info,
+)  # noqa: WPS436 (no other way?)
+
+# TODO: Update for new poetry and pip
 
 
 def get_credits_data() -> dict:
@@ -23,7 +27,9 @@ def get_credits_data() -> dict:
     lock_data = toml.load(project_dir / "poetry.lock")
     project_name = metadata["name"]
 
-    poetry_dependencies = chain(metadata["dependencies"].keys(), metadata["dev-dependencies"].keys())
+    poetry_dependencies = chain(
+        metadata["dependencies"].keys(), metadata["group"]["dev"]["dependencies"].keys()
+    )
     direct_dependencies = {dep.lower() for dep in poetry_dependencies}
     direct_dependencies.remove("python")
     indirect_dependencies = {pkg["name"].lower() for pkg in lock_data["package"]}
@@ -59,7 +65,9 @@ def get_credits():
     """
     jinja_env = SandboxedEnvironment(undefined=StrictUndefined)
     commit = "166758a98d5e544aaa94fda698128e00733497f4"
-    template_url = f"https://raw.githubusercontent.com/pawamoy/jinja-templates/{commit}/credits.md"
+    template_url = (
+        f"https://raw.githubusercontent.com/pawamoy/jinja-templates/{commit}/credits.md"
+    )
     template_data = get_credits_data()
     template_text = httpx.get(template_url).text
     return jinja_env.from_string(template_text).render(**template_data)
