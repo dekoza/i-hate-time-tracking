@@ -1,0 +1,19 @@
+# Changes here will be overwritten by Copier
+_commit: 0.3.1
+_src_path: gh:pawamoy/copier-poetry
+author_email: dominik@kozaczko.info
+author_fullname: Dominik Kozaczko
+author_username: dekoza
+copyright_date: '2021'
+copyright_holder: Dominik Kozaczko
+copyright_holder_email: dominik@kozaczko.info
+copyright_license: Apache License 2.0
+project_description: Get time tracking out of your way.
+project_name: I Hate Time Tracking
+python_package_command_line_name: ih
+python_package_distribution_name: i-hate-time-tracking
+python_package_import_name: ihtt
+repository_name: i-hate-time-tracking
+repository_namespace: dekoza
+repository_provider: github.com
+use_precommit: true
