@@ -21,3 +21,6 @@ async def init_db():
     command = Command(tortoise_config=TORTOISE_CONFIG, app="models")
     await command.init()
     await command.migrate("ihtt")
+
+    # schemas need to be initialized after Tortoise
+    from .schemas import PydReporter, PydSession, PydEntry  # noqa

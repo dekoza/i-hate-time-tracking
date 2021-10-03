@@ -27,6 +27,7 @@ trio = "^0.19.0"
 orjson = "^3.6.4"
 tortoise-orm = {version = "^0.17.7", extras = ["aiosqlite"]}
 aerich = "^0.5.8"
+requests = "^2.26.0"
 
 [tool.poetry.group.dev.dependencies]
 # formatting, quality, tests
