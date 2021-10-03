@@ -1,15 +1,23 @@
 import platformdirs
-from tortoise import Tortoise
+from aerich import Command
+
+_DATA_PATH = platformdirs.user_data_path() / "ihtt"
+DB_PATH = _DATA_PATH / "db.sqlite"
+
+TORTOISE_CONFIG = {
+    "connections": {
+        "default": f"sqlite://{DB_PATH.as_posix()}",
+    },
+    "apps": {
+        "models": {"models": ["ihtt.models", "aerich.models"]},
+    },
+}
 
 
 async def init_db():
-    data_path = platformdirs.user_data_path() / "ihtt"
-    db_path = data_path / "db.sqlite"
-    if not data_path.exists():
-        data_path.mkdir(parents=True)
-    if not db_path.exists():
-        await Tortoise.init(
-            db_url=f"sqlite://{db_path.as_posix()}",
-            modules={"models": ["ihtt.models"]},
-        )
-        await Tortoise.generate_schemas()
+    if not _DATA_PATH.exists():
+        _DATA_PATH.mkdir(parents=True)
+
+    command = Command(tortoise_config=TORTOISE_CONFIG, app="models")
+    await command.init()
+    await command.migrate("ihtt")
